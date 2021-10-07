@@ -1,9 +1,18 @@
 import argparse
 import sys
+import re
 
 
 def read_in(file,encoding="utf-8"):
-   workingfile = open(file, encoding=encoding)
+   f = open(file, encoding=encoding)
+   file = f.read()
+   f.close()
+   file = file.split("\n")
+   return file
+
+def find_labels(LIST):
+    for i in LIST:
+        re.search()
 
 
 def main():
@@ -22,6 +31,7 @@ def main():
     else:
         extraction_file = read_in(args.ext)
 
+        print(extraction_file[0:5])
 
 
 
