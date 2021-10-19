@@ -1,6 +1,7 @@
 import argparse
 import sys
 import re
+from collections import Counter
 
 
 def read_in(file,encoding="utf-8"):
@@ -10,9 +11,16 @@ def read_in(file,encoding="utf-8"):
    file = file.split("\n")
    return file
 
-def find_labels(LIST):
-    for i in LIST:
-        re.search()
+def find_labels(STRING):
+    pattern1 = re.compile(r'labels":\["([A-Z][a-z]*)",|"labels\\":\[\\"([A-Z][a-z]*)\\",')
+   # pattern1= '(\"labels\":[\"([A-Z][a-z]*)\",)|\"labels\\\":[\\\"([A-Z][a-z]*)\\\",'
+
+    #for match in pattern1.finditer(STRING):
+        #print(match.group(1))
+        #print(match.group(2))
+    if re.search(pattern1,STRING):
+        return [match.group(1) for match in pattern1.finditer(STRING)]
+
 
 
 def main():
@@ -25,13 +33,18 @@ def main():
                         help="The encoding of your extraction file, default = utf-8",
                         required=False)
     args = parser.parse_args()
-
+    c = Counter()
     if args.enc:
         extraction_file = read_in(args.ext,args.enc)
     else:
         extraction_file = read_in(args.ext)
+        for json in extraction_file:
+            labels = find_labels(str(json))
+            c.update(labels)
+        print(c)
 
-        print(extraction_file[0:5])
+
+        #print(extraction_file[0:5])
 
 
 
@@ -42,3 +55,5 @@ def main():
 
 if __name__ == '__main__':
     main()
+
+
