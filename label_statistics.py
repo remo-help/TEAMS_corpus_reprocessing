@@ -46,15 +46,7 @@ def main():
         extraction_file = read_in(args.ext)
         labels = find_labels(extraction_file)
         print(labels)
-        #for label in labels:
-            #for i in label:
-                #if i:
         c.update(labels)
-        #for json in extraction_file:
-        #    labels = find_labels(str(json))
-        #    for label in labels:
-        #        if label:
-        #            c.update(label[0])
         print(c)
 
     if args.out:
