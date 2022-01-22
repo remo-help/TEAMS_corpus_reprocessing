@@ -22,10 +22,10 @@ def main():
 
     if args.filename:
         writefile = open(args.filename+".vtt", "w+", encoding='utf-8')
-        writefile.write("WEBVTT\n\n")
+        writefile.write("WEBVTT\n")
     else:
         writefile = open("writefile.vtt", "w+", encoding='utf-8')
-        writefile.write("WEBVTT\n\n")
+        writefile.write("WEBVTT\n")
 
     directory = args.dir
 
@@ -35,9 +35,12 @@ def main():
                 file = pd.read_excel(entry.path)
                 vtt = WebVTT()
                 for i in file.index:
+                    timestamp_start= "00:00:"+str(file['Timestamp_Start'][i])[:-1]
+                    timestamp_end= "00:00:"+str(file['Timestamp_End'][i])[:-1]
+                    print(i)
                     caption = Caption(
-                        '00:00:00.000',
-                        '00:00:00.000',
+                        timestamp_start,
+                        timestamp_end,
                         str(file['Utterance'][i])
                     )
                     vtt.captions.append(caption)
@@ -49,6 +52,7 @@ def main():
             if (entry.path.endswith(".xls")) and entry.is_file():
                 file = pd.read_excel(entry.path)
                 for i in file.index:
+                    writefile.write("\n")
                     writefile.write(str(i+1))
                     writefile.write("\n")
                     writefile.write("00:00:")
@@ -59,7 +63,6 @@ def main():
                     writefile.write("\n")
                     writefile.write(str(file['Speaker_Role'][i])+': ')
                     writefile.write(str(file['Utterance'][i]))
-                    writefile.write("\n")
                     writefile.write("\n")
             #utterances = file['Utterance']
             #print(utterances[0:5])
