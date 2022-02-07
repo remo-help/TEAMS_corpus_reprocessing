@@ -1,5 +1,4 @@
 import pandas as pd
-import os
 import argparse
 import sys
 import json
@@ -13,6 +12,17 @@ def write_txt(lines: list,filename: str):
         else:
             writefile.write(line)
             writefile.write("\n")
+
+#using this to convert a string argument to a boolean
+def str2bool(v):
+    if isinstance(v, bool):
+        return v
+    if v.lower() in ('yes', 'true', 't', 'y', '1'):
+        return True
+    elif v.lower() in ('no', 'false', 'f', 'n', '0'):
+        return False
+    else:
+        raise argparse.ArgumentTypeError('Boolean value expected.')
 
 
 def start_parser() -> argparse.ArgumentParser:
@@ -28,7 +38,7 @@ def start_parser() -> argparse.ArgumentParser:
     parser.add_argument("--pickle", help="Parameter for the output type of your --outputfile if --json is called. If True, the output will be a pickle file, "
                                          "if False, the output will be a JSON textfile."
                                          "Default: True",
-                        required=False, default=True, type=bool)
+                        required=False, default=True, type=str2bool)
     return parser
 
 
@@ -74,11 +84,11 @@ def import_extractions(inputfile: str,jsonfile: str,outputfile: str,pickling: bo
     for i in range(0,len(captions)):
         captions[i]["Extractions"] = extractions[i]["data"]["extractions"]
 
-    if pickling:
+    if pickling is True:
         with open(outputfile, 'wb') as fh:
             pickle.dump(captions, fh)
         print("Pickle file created successfully")
-    else:
+    elif pickling is False:
         with open(outputfile, 'w') as fh:
             for caption in captions:
                 fh.write(str(caption))
