@@ -27,3 +27,6 @@ If you wish your output to be a readable text file instead, you can call the abo
     python txt_reprocessor.py --file YOUR_INPUT_FILE.xls --json ASIST_OUTPUTFILE --outputfile FINAL_OUTPTUTFILE --pickle False
     
 With the `--pickle` flag marked as `False` or `no` you will export a text file instead of a pickle file.
+
+## Multi File Mode
+** in progress **
