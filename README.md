@@ -8,9 +8,10 @@ This mode allows you to process a single TEAMS corpus .xls file. Use as follows:
 
     python txt_reprocessor.py --file YOUR_INPUT_FILE.xls --outputfile YOUR_OUTPUTFILE.txt
 
-This will extract all lines of text from your .xls file and write them as lines in a simple .txt file. Next you will need to process ths .txt file with the ASIST DialogAgent:
+This will extract all lines of text from your .xls file and write them as lines in a simple .txt file. Next you will need to process ths .txt file with the ASIST DialogAgent (we are using a fork here):
 
     git clone https://github.com/remo-help/tomcat-text.git
+    cd tomcat-text
     sbt "runMain org.clulab.asist.apps.RunDialogAgent file path/YOUR_TXT_FILE.txt path/ASIST_OUTPUTFILE"
 
 This will run the DialogAgent on all the lines in the .txt file you produced. The outputfile you define will contain a JSON object for each line.
