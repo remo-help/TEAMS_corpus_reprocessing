@@ -1,7 +1,16 @@
 # TEAMS_corpus_reprocessing
 A repository for scripts which are used to process TEAMS corpus data for processing with the tomcat-text engine.
 
-# Usage
+# Data Structure
+The output of these scripts contains the following structure:
+
+* pickle mode True: a pickle file containing an object of type \[{}\] (a list of dictionaries)
+* * each dictionary contains the following values:
+* * * Speaker: string: speaker_role
+* * * Timestamp: tuple of floats
+* * * Team_ID: string: the ID of the team and the game
+* * * Extractions: \[ a list of DialogAgent extractions\]
+* pickle mode False: a text file containing the above data structure as a file of JSON objects
 
 ## Single File Mode (txt_reprocessor.py)
 This mode allows you to process a single TEAMS corpus .xls file. Use as follows:
