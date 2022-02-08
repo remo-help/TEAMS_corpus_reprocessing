@@ -41,6 +41,7 @@ def run_dir(dirpath: str, pickling: bool,daDIR: str):
             os.chdir(filepath)
             pickle = pickle_path + entry.name[:-4]
             txt.import_extractions(inputfile=entry.path,jsonfile=metaname,pickling=pickling,outputfile=pickle)
+            print(f"processed {entry.name} successfully \n all outputs created")
 
 
 
