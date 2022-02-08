@@ -3,6 +3,7 @@ import argparse
 import sys
 import json
 import pickle
+import numpy as np
 
 def write_txt(lines: list,filename: str):
     writefile= open(filename, "w", encoding='utf-8')
@@ -52,11 +53,15 @@ def txt_single(inputfile: str, outputfile: str=None):
         return None
     print(f"working on {inputfile}")
     for i in file.index:
+        if file['Utterance'][i] is np.nan:
+            utterance = ""
+        else:
+            utterance = file['Utterance'][i]
         timestamp_start= float(file['Timestamp_Start'][i])
         timestamp_end= float(file['Timestamp_End'][i])
-        caption = {'Speaker':file['Speaker_Role'][i],'Timestamp':(timestamp_start,timestamp_end),'Utterance':file['Utterance'][i],'Team_ID':file['TeamID'][i]}
+        caption = {'Speaker':file['Speaker_Role'][i],'Timestamp':(timestamp_start,timestamp_end),'Utterance':utterance,'Team_ID':file['TeamID'][i]}
         caption_list.append(caption)
-        utterance_list.append(str(caption['Utterance']))
+        utterance_list.append(utterance)
     if outputfile:
         write_txt(utterance_list,outputfile)
         return caption_list
