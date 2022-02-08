@@ -45,7 +45,11 @@ def start_parser() -> argparse.ArgumentParser:
 def txt_single(inputfile: str, outputfile: str=None):
     caption_list = []
     utterance_list = []
-    file = pd.read_excel(inputfile)
+    try:
+        file = pd.read_excel(inputfile)
+    except:
+        print(f"{inputfile} is not an excel file")
+        return None
     print(f"working on {inputfile}")
     for i in file.index:
         timestamp_start= float(file['Timestamp_Start'][i])
@@ -55,7 +59,7 @@ def txt_single(inputfile: str, outputfile: str=None):
         utterance_list.append(str(caption['Utterance']))
     if outputfile:
         write_txt(utterance_list,outputfile)
-        print(caption_list[len(caption_list)-1])
+        return caption_list
     else:
         return caption_list
 
@@ -85,11 +89,13 @@ def import_extractions(inputfile: str,jsonfile: str,outputfile: str,pickling: bo
         captions[i]["Extractions"] = extractions[i]["data"]["extractions"]
 
     if pickling is True:
-        with open(outputfile, 'wb') as fh:
+        name = outputfile + ".pickle"
+        with open(name, 'wb') as fh:
             pickle.dump(captions, fh)
         print("Pickle file created successfully")
     elif pickling is False:
-        with open(outputfile, 'w') as fh:
+        name = outputfile + ".txt"
+        with open(name, 'w') as fh:
             for caption in captions:
                 fh.write(str(caption))
                 fh.write("\n")

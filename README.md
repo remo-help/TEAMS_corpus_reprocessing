@@ -10,6 +10,7 @@ The output of these scripts contains the following structure:
 * * * Timestamp: tuple of floats
 * * * Team_ID: string: the ID of the team and the game
 * * * Extractions: \[ a list of DialogAgent extractions\]
+* * * Utterance: A string object of the utterance
 * pickle mode False: a text file containing the above data structure as a file of JSON objects
 
 ## Single File Mode (txt_reprocessor.py)
@@ -38,4 +39,21 @@ If you wish your output to be a readable text file instead, you can call the abo
 With the `--pickle` flag marked as `False` or `no` you will export a text file instead of a pickle file.
 
 ## Multi File Mode
-** in progress **
+ The multi file mode allows you to process entire directories of TEAMS corpus files in batch.
+It will produce 3 subdirectories in the directory you point it to:
+
+* `/txt_outputs/` These are the .txt files containing the extracted utterances as lines
+* `/DialogAgent_outputs/` The DialogAgent metadata files containing the DialogAgent Extractions of your .txt lines.
+* `/pickle_outputs/` The final output files as described in *Data Structure*. These will be in this directory regardless of whether you call the `--pickle 0/1` parameter.
+
+### Usage
+
+The usage for this mode is simple. First you need to clone the tomcat-text repo. For the TEAMS corpus you want our fork:
+
+    git clone https://github.com/remo-help/tomcat-text.git
+
+Make sure you know where you clone this repo to. You will need the path of the repo in the next step. Now call the `batch_processor.py` script:
+
+    python batch_reprocessor.py --dir DIRECTORY_OF_TEAMS_FILES --pickle TRUE/FALSE --tomcatdir DIRECTORY_OF_TOMCAT_REPO
+
+That's it. The batch processor will now process every file in your --dir. This may take a while.
