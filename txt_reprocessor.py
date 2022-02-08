@@ -91,6 +91,7 @@ def import_extractions(inputfile: str,jsonfile: str,outputfile: str,pickling: bo
         raise Exception("Your --json file and your inputfile (--file) do not cover the same text")
 
     for i in range(0,len(captions)):
+        assert captions[0]["Utterance"] == extractions[0]["data"]["text"]
         captions[i]["Extractions"] = extractions[i]["data"]["extractions"]
 
     if pickling is True:
